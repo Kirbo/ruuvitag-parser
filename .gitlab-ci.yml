@@ -74,7 +74,7 @@ ts to js:
       - src
     expire_in: 1 month
   script:
-    - yarn compile
+    - yarn compile:ci
 
 new release:
   <<: *general

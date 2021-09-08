@@ -14,6 +14,7 @@
   },
   "scripts": {
     "compile": "yarn compile:clean && tsc -p tsconfig.compile.json",
+    "compile:ci": "tsc -p tsconfig.compile.json",
     "compile:clean": "find src test -name '*.js' -delete",
     "test": "jest --verbose"
   },
