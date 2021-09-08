@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "2gua.rainbow-brackets",
+    "bgse.relative-path-and-line",
+    "eamodio.gitlens",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+  ]
+}

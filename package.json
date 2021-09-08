@@ -1,0 +1,38 @@
+{
+  "name": "ruuvitag-parser",
+  "main": "index.js",
+  "repository": "git@gitlab.devaus.eu:kirbo/ruuvitag-parser.git",
+  "author": "Kimmo Saari <kimmo.saari@aava.fi>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "27.0.1",
+    "@types/node": "16.7.13",
+    "jest": "27.1.1",
+    "prettier": "2.3.2",
+    "ts-jest": "27.0.5",
+    "typescript": "4.4.2"
+  },
+  "scripts": {
+    "compile": "yarn compile:clean && tsc -p tsconfig.compile.json",
+    "compile:clean": "find src test -name '*.js' -delete",
+    "test": "jest --verbose"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testRegex": ".*unit.test.ts$",
+    "moduleNameMapper": {
+      "@lib/(.*)$": "<rootDir>/src/lib/$1",
+      "@dataformats": "<rootDir>/src/dataformats",
+      "@dataformats/(.*)$": "<rootDir>/src/dataformats/$1",
+      "@types": "<rootDir>/src/types",
+      "@types/(.*)$": "<rootDir>/src/types/$1"
+    }
+  },
+  "_moduleAliases": {
+    "@lib/*": "src/lib/*",
+    "@dataformats": "src/dataformats",
+    "@dataformats/*": "src/dataformats/*",
+    "@types": "src/types",
+    "@types/*": "src/types/*"
+  }
+}

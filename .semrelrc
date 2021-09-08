@@ -1,0 +1,22 @@
+{
+  "plugins": {
+    "commit-analyzer": {
+      "name": "default@^1.3.0"
+    },
+    "ci-condition": {
+      "name": "default"
+    },
+    "changelog-generator": {
+      "name": "default@^1.4.0"
+    },
+    "provider": {
+      "name": "gitlab",
+      "options": {
+        "gitlab_projectid": "29467400"
+      }
+    },
+    "files-updater": {
+      "name": "npm"
+    }
+  }
+}

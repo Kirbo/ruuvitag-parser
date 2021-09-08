@@ -1,0 +1,117 @@
+## https://docs.gitlab.com/ce/ci/yaml/README.html
+## https://docs.gitlab.com/ee/ci/variables/README.html
+
+###### GENERAL ################################################################
+image: node:14
+
+cache:
+  paths:
+    - node_modules/
+
+###### TEMPLATES ##############################################################
+.general: &general
+  tags:
+    - gitlab-org
+  variables:
+    GIT_STRATEGY: fetch
+
+.no-tags: &no-tags
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+.master-only: &master-only
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - when: on_success
+
+###### STAGES #################################################################
+stages:
+  - install
+  - test
+  - compile
+  - publish
+
+###### JOBS ###################################################################
+dependencies:
+  <<: *general
+  <<: *no-tags
+  stage: install
+  cache:
+    policy: pull-push
+    paths:
+      - node_modules
+  script:
+    - yarn install
+
+unit:
+  <<: *general
+  <<: *no-tags
+  stage: test
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: dependencies
+      artifacts: true
+  script:
+    - yarn test --ci --colors
+
+ts to js:
+  <<: *general
+  <<: *no-tags
+  stage: compile
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: dependencies
+      artifacts: true
+  artifacts:
+    paths:
+      - src
+    expire_in: 1 month
+  script:
+    - yarn compile
+
+new release:
+  <<: *general
+  <<: *master-only
+  stage: publish
+  image:
+    name: registry.gitlab.com/go-semantic-release/semantic-release:latest
+    entrypoint: [""]
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: ts to js
+      artifacts: false
+  artifacts:
+    paths:
+      - .version
+    expire_in: 1 month
+  script:
+    # - semantic-release --provider gitlab --version-file
+    - semantic-release --provider gitlab --version-file --allow-initial-development-versions # Once stable, remove this and uncomment previous line
+
+npm package:
+  <<: *general
+  <<: *master-only
+  stage: publish
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: ts to js
+      artifacts: true
+    - job: new release
+      artifacts: true
+  script:
+    - echo "${gitconfig}" > ~/.gitconfig
+    - echo "${npmrc}" > ~/.npmrc
+    - echo "Publish version $(cat .version)"
+    - yarn publish --new-version $(cat .version)
