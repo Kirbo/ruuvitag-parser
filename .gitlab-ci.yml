@@ -24,13 +24,6 @@ cache:
       when: never
     - when: always
 
-.master-only: &master-only
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: on_success
-
 ###### STAGES #################################################################
 stages:
   - install
@@ -84,8 +77,12 @@ ts to js:
 
 new release:
   <<: *general
-  <<: *master-only
   stage: publish
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
   image:
     name: registry.gitlab.com/go-semantic-release/semantic-release:latest
     entrypoint: [""]
@@ -101,13 +98,19 @@ new release:
       - .version
     expire_in: 1 month
   script:
-    # - semantic-release --provider gitlab --version-file
-    - semantic-release --provider gitlab --version-file --allow-initial-development-versions # Once stable, remove this and uncomment previous line
+    # - semantic-release --provider gitlab --version-file || true
+    - semantic-release --provider gitlab --version-file --allow-initial-development-versions || true # Once stable, remove this and uncomment previous line
 
 npm package:
   <<: *general
-  <<: *master-only
   stage: publish
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+    - exists:
+        - .version
   cache:
     policy: pull
     paths:
@@ -118,6 +121,7 @@ npm package:
     - job: new release
       artifacts: true
   script:
+    - test -f .version || exit 0 # If no `.version` file found, just exit
     - echo "${npmrc}" > ~/.npmrc
     - echo "Publish version $(cat .version)"
     - yarn publish --new-version $(cat .version) --no-git-tag-version
