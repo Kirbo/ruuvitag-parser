@@ -1,6 +1,9 @@
 ## https://docs.gitlab.com/ce/ci/yaml/README.html
 ## https://docs.gitlab.com/ee/ci/variables/README.html
 
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
 ###### GENERAL ################################################################
 image: node:14
 
