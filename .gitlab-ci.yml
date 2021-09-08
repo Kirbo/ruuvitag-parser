@@ -118,4 +118,4 @@ npm package:
     - echo "${gitconfig}" > ~/.gitconfig
     - echo "${npmrc}" > ~/.npmrc
     - echo "Publish version $(cat .version)"
-    - yarn publish --new-version $(cat .version)
+    - yarn publish --new-version $(cat .version) --no-git-tag-version
