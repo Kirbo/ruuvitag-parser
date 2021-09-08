@@ -43,6 +43,27 @@ dependencies:
   script:
     - yarn install
 
+sast:
+  <<: *no-tags
+  stage: test
+  image: docker:stable
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+        --env SAST_CONFIDENCE_LEVEL="${SAST_CONFIDENCE_LEVEL:-3}"
+        --volume "$PWD:/code"
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "registry.gitlab.com/gitlab-org/security-products/sast:$SP_VERSION" /app/bin/run /code
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
+
+
 unit:
   <<: *general
   <<: *no-tags
@@ -78,6 +99,7 @@ ts to js:
 new release:
   <<: *general
   stage: publish
+  allow_failure: true
   rules:
     - if: $CI_COMMIT_TAG
       when: never
@@ -98,8 +120,8 @@ new release:
       - .version
     expire_in: 1 month
   script:
-    # - semantic-release --provider gitlab --version-file || true
-    - semantic-release --provider gitlab --version-file --allow-initial-development-versions || true # Once stable, remove this and uncomment previous line
+    # - semantic-release --provider gitlab --version-file
+    - semantic-release --provider gitlab --version-file --allow-initial-development-versions # Once stable, remove this and uncomment previous line
 
 npm package:
   <<: *general
@@ -111,6 +133,7 @@ npm package:
       when: on_success
     - exists:
         - .version
+    - when: never
   cache:
     policy: pull
     paths:
