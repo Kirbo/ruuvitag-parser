@@ -1,4 +1,4 @@
-import parseEddystoneBeacon from '@lib/eddystone'
+import { parseEddystone } from '@lib/eddystone'
 
 const dataBuffers = {
   ruuviTag: Buffer.from([
@@ -11,13 +11,13 @@ const dataBuffers = {
   ]),
 }
 
-describe('Module eddystone', () => {
+describe('eddystone.js', () => {
   it("should return undefined if it's not an Eddystone URL packet", () => {
-    expect(parseEddystoneBeacon(dataBuffers.telemetryFrame)).toBe(undefined)
+    expect(parseEddystone(dataBuffers.telemetryFrame)).toBe(undefined)
   })
 
   it("should return url if it's an Eddystone URL packet", () => {
-    const result = parseEddystoneBeacon(dataBuffers.ruuviTag)
+    const result = parseEddystone(dataBuffers.ruuviTag)
     expect(result).toMatch(/^https:\/\/ruu\.vi\//)
   })
 })

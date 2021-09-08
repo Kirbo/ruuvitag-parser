@@ -43,6 +43,33 @@ dependencies:
   script:
     - yarn install
 
+lint:
+  <<: *general
+  <<: *no-tags
+  stage: test
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: dependencies
+      artifacts: true
+  script:
+    - yarn lint
+
+verify:
+  <<: *general
+  <<: *no-tags
+  stage: test
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: dependencies
+      artifacts: true
+  script:
+    - yarn verify
 
 unit:
   <<: *general
@@ -56,7 +83,7 @@ unit:
     - job: dependencies
       artifacts: true
   script:
-    - yarn test --ci --colors
+    - yarn test:unit --ci --colors
 
 ts to js:
   <<: *general
@@ -71,7 +98,7 @@ ts to js:
       artifacts: true
   artifacts:
     paths:
-      - src
+      - dist
     expire_in: 1 month
   script:
     - yarn compile:ci
@@ -87,12 +114,18 @@ new release:
       when: on_success
   image:
     name: registry.gitlab.com/go-semantic-release/semantic-release:latest
-    entrypoint: [""]
+    entrypoint: ['']
   cache:
     policy: pull
     paths:
       - node_modules
   needs:
+    - job: lint
+      artifacts: false
+    - job: unit
+      artifacts: false
+    - job: verify
+      artifacts: false
     - job: ts to js
       artifacts: false
   artifacts:
@@ -121,9 +154,9 @@ npm package:
     paths:
       - node_modules
   needs:
-    - job: ts to js
-      artifacts: true
     - job: new release
+      artifacts: true
+    - job: ts to js
       artifacts: true
   before_script:
     - test -f .version || exit 0 # If no `.version` file found, just exit

@@ -4,7 +4,7 @@ import {
   ParsedFormatV4,
   ParsedFormatV5,
 } from '@types'
-import parser from '@lib/parse'
+import parser from '@index'
 
 const createManufacturerData = () => {
   const values: ParsedFormatV3 = {
@@ -29,7 +29,21 @@ const createManufacturerData = () => {
   }
 }
 
-describe('parse.js', () => {
+const mqttValues = {
+  accelerationX: -832,
+  accelerationY: -584,
+  accelerationZ: 60,
+  battery: 2959,
+  humidity: 41.5075,
+  mac: 'C9:5F:8D:CF:52:1F',
+  measurementSequenceNumber: 49370,
+  movementCounter: 86,
+  pressure: 100105,
+  temperature: 24.49,
+  txPower: 4,
+}
+
+describe('parser.js', () => {
   const data = [0x98, 0x15, 0x00, 0xc0, 0x30]
   const dataBufferFormat2 = Buffer.from([0x02].concat(data))
   const dataBufferFormat4 = Buffer.from([0x04].concat(data).concat([0x3e]))
@@ -96,7 +110,7 @@ describe('parse.js', () => {
   describe('parsing data format 3', () => {
     const data = createManufacturerData()
     const testValues = data.values
-    const result = parser.parseManufacturerData(data.buffer) as ParsedFormatV3
+    const result = parser.parseData(data.buffer) as ParsedFormatV3
 
     it("shouldn't return error", () => {
       expect(result instanceof Error).toBeFalsy()
@@ -153,7 +167,7 @@ describe('parse.js', () => {
   })
 
   describe('parsing data format 5', () => {
-    const result = parser.parseManufacturerData(
+    const result = parser.parseData(
       Buffer.from([0x99, 0x04].concat(dataFormat5)),
     ) as ParsedFormatV5
 
@@ -203,6 +217,44 @@ describe('parse.js', () => {
 
     it('should parse MAC address', () => {
       expect(result.mac).toBe('CB:B8:33:4C:88:01')
+    })
+  })
+
+  describe('should parse mqtt message', () => {
+    const mqttResult = parser.parseData(
+      '0201061BFF990405132240DBC3B9FCC0FDB8003CA9F656C0DAC95F8DCF521F',
+    )
+
+    it("shouldn't return error", () => {
+      expect(mqttResult instanceof Error).toBeFalsy()
+    })
+
+    it('should parse temperature value', () => {
+      expect(mqttResult.temperature).toBe(mqttValues.temperature)
+    })
+
+    it('should parse pressure value', () => {
+      expect(mqttResult.pressure).toBe(mqttValues.pressure)
+    })
+
+    it('should parse humidity value', () => {
+      expect(mqttResult.humidity).toBe(mqttValues.humidity)
+    })
+
+    it('should parse accelerationX', () => {
+      expect(mqttResult.accelerationX).toBe(mqttValues.accelerationX)
+    })
+
+    it('should parse accelerationY', () => {
+      expect(mqttResult.accelerationY).toBe(mqttValues.accelerationY)
+    })
+
+    it('should parse accelerationZ', () => {
+      expect(mqttResult.accelerationZ).toBe(mqttValues.accelerationZ)
+    })
+
+    it('should parse battery', () => {
+      expect(mqttResult.battery).toBe(mqttValues.battery)
     })
   })
 })

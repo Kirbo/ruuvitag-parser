@@ -1,32 +1,32 @@
-export interface ParsedFormatV2 {
-  eddystoneId?: number
-  humidity?: number
-  pressure?: number
-  temperature?: number
-}
+import {
+  ParsedFormatV2,
+  ParsedFormatV3,
+  ParsedFormatV4,
+  ParsedFormatV5,
+} from './dataformats'
 
-export interface ParsedFormatV4 extends ParsedFormatV2 {}
+export { ParsedFormatV2, ParsedFormatV3, ParsedFormatV4, ParsedFormatV5 }
 
-export interface ParsedFormatV3 {
-  accelerationX?: number
-  accelerationY?: number
-  accelerationZ?: number
-  battery?: number
-  humidity?: number
-  pressure?: number
-  temperature?: number
-}
+declare module 'ruuvitag-parser' {
+  export function parseUrl(url: string): ParsedFormatV2 | ParsedFormatV4 | Error
+  export function parseData(
+    data: string | Buffer,
+  ): ParsedFormatV3 | ParsedFormatV5 | Error
+  export function parseEddystone(data: Buffer): string | void
 
-export interface ParsedFormatV5 {
-  accelerationX?: number
-  accelerationY?: number
-  accelerationZ?: number
-  battery?: number
-  humidity?: number
-  pressure?: number
-  temperature?: number
-  txPower?: number
-  movementCounter?: number
-  measurementSequenceNumber?: number
-  mac?: string
+  export namespace formats_2_and_4 {
+    function parse(data: Buffer): ParsedFormatV2 | ParsedFormatV4
+  }
+  export namespace format_2 {
+    function parse(data: Buffer): ParsedFormatV2
+  }
+  export namespace format_3 {
+    function parse(data: string | Buffer): ParsedFormatV3
+  }
+  export namespace format_4 {
+    function parse(data: Buffer): ParsedFormatV4
+  }
+  export namespace format_5 {
+    function parse(data: string | Buffer): ParsedFormatV5
+  }
 }

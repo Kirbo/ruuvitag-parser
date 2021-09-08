@@ -5,53 +5,42 @@ const int2Hex = (str: number) =>
 
 const parse = (data: Buffer): ParsedFormatV5 => {
   let temperature: number | undefined = (data[3] << 8) | (data[4] & 0xff)
-  if (temperature == 32768) {
-    // ruuvi spec := 'invalid/not available'
-    temperature = undefined
-  } else if (temperature > 32768) {
-    // two's complement
-    temperature = (temperature - 65536) * 0.005
-  } else {
-    temperature = temperature * 0.005
+  if (temperature > 32767) {
+    temperature -= 65534
   }
+  temperature = temperature / 200.0
 
   let humidity: number | undefined = ((data[5] & 0xff) << 8) | (data[6] & 0xff)
-  humidity = humidity != 65535 ? humidity * 0.0025 : undefined
+  humidity = humidity !== 65535 ? humidity * 0.0025 : undefined
 
   let pressure: number | undefined = ((data[7] & 0xff) << 8) | (data[8] & 0xff)
   pressure = pressure !== 65535 ? pressure + 50000 : undefined
 
   let accelerationX: number | undefined = (data[9] << 8) | (data[10] & 0xff)
-  if (accelerationX == 32768) {
+  if (accelerationX === 32768) {
     // ruuvi spec := 'invalid/not available'
     accelerationX = undefined
   } else if (accelerationX > 32768) {
     // two's complement
     accelerationX = accelerationX - 65536
-  } else {
-    accelerationX = accelerationX
   }
 
   let accelerationY: number | undefined = (data[11] << 8) | (data[12] & 0xff)
-  if (accelerationY == 32768) {
+  if (accelerationY === 32768) {
     // ruuvi spec := 'invalid/not available'
     accelerationY = undefined
   } else if (accelerationY > 32768) {
     // two's complement
     accelerationY = accelerationY - 65536
-  } else {
-    accelerationY = accelerationY
   }
 
   let accelerationZ: number | undefined = (data[13] << 8) | (data[14] & 0xff)
-  if (accelerationZ == 32768) {
+  if (accelerationZ === 32768) {
     // ruuvi spec := 'invalid/not available'
     accelerationZ = undefined
   } else if (accelerationZ > 32768) {
     // two's complement
     accelerationZ = accelerationZ - 65536
-  } else {
-    accelerationZ = accelerationZ
   }
 
   const powerInfo = ((data[15] & 0xff) << 8) | (data[16] & 0xff)
