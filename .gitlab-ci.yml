@@ -99,6 +99,7 @@ new release:
     paths:
       - .version
     expire_in: 1 month
+    when: on_success
   script:
     # - semantic-release --provider gitlab --version-file
     - semantic-release --provider gitlab --version-file --allow-initial-development-versions # Once stable, remove this and uncomment previous line
@@ -124,8 +125,9 @@ npm package:
       artifacts: true
     - job: new release
       artifacts: true
-  script:
+  before_script:
     - test -f .version || exit 0 # If no `.version` file found, just exit
+  script:
     - echo "${npmrc}" > ~/.npmrc
     - echo "Publish version $(cat .version)"
     - yarn publish --new-version $(cat .version) --no-git-tag-version
