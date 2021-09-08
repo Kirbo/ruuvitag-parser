@@ -43,7 +43,6 @@ dependencies:
   script:
     - yarn install
 
-
 unit:
   <<: *general
   <<: *no-tags
@@ -87,7 +86,7 @@ new release:
       when: on_success
   image:
     name: registry.gitlab.com/go-semantic-release/semantic-release:latest
-    entrypoint: [""]
+    entrypoint: ['']
   cache:
     policy: pull
     paths:
