@@ -4,6 +4,7 @@
   "types": "src/types/index.d.ts",
   "repository": "https://gitlab.com/kirbo/ruuvitag-parser",
   "author": "Kimmo Saari <kirbownz@me.com>",
+  "type": "commonjs",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "27.0.1",
