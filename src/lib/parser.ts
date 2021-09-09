@@ -39,15 +39,30 @@ const parseUrl = (url: string): ParsedFormatV2 | ParsedFormatV4 | Error => {
   return encodedData instanceof Error ? encodedData : getReadings(encodedData)
 }
 
-const parseData = (data: Buffer): ParsedFormatV3 | ParsedFormatV5 | Error => {
-  const dataFormat = data[2]
+const hexToBytes = (hex: string): number[] => {
+  const bytes = []
+  for (let c = 0; c < hex.length; c += 2) {
+    bytes.push(parseInt(hex.substr(c, 2), 16))
+  }
+  return bytes
+}
+
+const parseData = (data: string | Buffer): ParsedFormatV3 | ParsedFormatV5 => {
+  const companyIndex = data.indexOf('FF9904')
+  const rData =
+    typeof data === 'string'
+      ? Buffer.from(hexToBytes(data.substring(companyIndex + 2, data.length)))
+      : data
+
+  const dataFormat = rData[2]
+
   switch (dataFormat) {
     case 3:
-      return format_3.parse(data)
+      return format_3.parse(rData)
     case 5:
-      return format_5.parse(data)
+      return format_5.parse(rData)
     default:
-      return new Error('Data format not supported')
+      throw new Error('Data format not supported')
   }
 }
 
