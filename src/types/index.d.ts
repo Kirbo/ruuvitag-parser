@@ -1,3 +1,12 @@
+import {
+  ParsedFormatV2,
+  ParsedFormatV3,
+  ParsedFormatV4,
+  ParsedFormatV5,
+} from './dataformats'
+
+export { ParsedFormatV2, ParsedFormatV3, ParsedFormatV4, ParsedFormatV5 }
+
 export interface parser {
   parseUrl: (url: string) => ParsedFormatV2 | ParsedFormatV4 | Error
   parseManufacturerData: (
@@ -7,35 +16,14 @@ export interface parser {
 
 export function parseEddystoneBeacon(serviceDataBuffer: Buffer): string | void
 
-export interface ParsedFormatV2 {
-  eddystoneId?: number
-  humidity?: number
-  pressure?: number
-  temperature?: number
+export interface formats_2_and_4 {
+  parse: (buffer: Buffer) => ParsedFormatV2 | ParsedFormatV4
 }
 
-export interface ParsedFormatV4 extends ParsedFormatV2 {}
-
-export interface ParsedFormatV3 {
-  accelerationX?: number
-  accelerationY?: number
-  accelerationZ?: number
-  battery?: number
-  humidity?: number
-  pressure?: number
-  temperature?: number
+export interface format_3 {
+  parse: (buffer: Buffer) => ParsedFormatV3
 }
 
-export interface ParsedFormatV5 {
-  accelerationX?: number
-  accelerationY?: number
-  accelerationZ?: number
-  battery?: number
-  humidity?: number
-  pressure?: number
-  temperature?: number
-  txPower?: number
-  movementCounter?: number
-  measurementSequenceNumber?: number
-  mac?: string
+export interface format_5 {
+  parse: (buffer: Buffer) => ParsedFormatV5
 }
