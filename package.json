@@ -2,13 +2,18 @@
   "name": "ruuvitag-parser",
   "main": "dist/index.js",
   "types": "src/types/index.d.ts",
-  "repository": "git@gitlab.devaus.eu:kirbo/ruuvitag-parser.git",
+  "repository": "https://gitlab.com/kirbo/ruuvitag-parser",
   "author": "Kimmo Saari <kirbownz@me.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "27.0.1",
+    "@typescript-eslint/eslint-plugin": "4.31.0",
+    "@typescript-eslint/parser": "4.31.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "4.0.0",
     "jest": "27.1.1",
-    "prettier": "2.3.2",
+    "prettier": "2.4.0",
     "ts-jest": "27.0.5",
     "typescript": "4.4.2"
   },
@@ -18,8 +23,11 @@
   "scripts": {
     "compile": "yarn compile:clean && tsc -p tsconfig.compile.json",
     "compile:ci": "tsc -p tsconfig.compile.json",
-    "compile:clean": "find src test -name '*.js' -delete",
-    "test": "jest --verbose"
+    "compile:clean": "rm -rf dist",
+    "lint": "eslint src",
+    "test": "yarn lint && yarn verify && yarn test:unit",
+    "test:unit": "jest --verbose",
+    "verify": "tsc --noEmit"
   },
   "files": [
     "dist",
@@ -37,7 +45,8 @@
       "@lib/(.*)$": "<rootDir>/src/lib/$1",
       "@dataformats": "<rootDir>/src/dataformats",
       "@dataformats/(.*)$": "<rootDir>/src/dataformats/$1",
-      "@types": "<rootDir>/src/types"
+      "@types": "<rootDir>/src/types",
+      "@types/*": "<rootDir>/src/types/$1"
     }
   },
   "_moduleAliases": {
@@ -46,6 +55,7 @@
     "@lib/*": "src/lib/*",
     "@dataformats": "src/dataformats",
     "@dataformats/*": "src/dataformats/*",
-    "@types": "src/types"
+    "@types": "src/types",
+    "@types/*": "src/types/*"
   }
 }

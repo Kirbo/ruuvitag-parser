@@ -1,20 +1,22 @@
 # RuuviTag Parser
 
-This repository is heavily inspired by [pakastin/node-ruuvitag](https://github.com/pakastin/node-ruuvitag),
+This repository is heavily influenced/inspired by [pakastin/node-ruuvitag](https://github.com/pakastin/node-ruuvitag),
 which I also took as a base and did some heavy refactoring, as well as converting the old JavaScript files
 into TypeScript.
 
 **!! This repository is still a work in progress !!**
 
-This module only handles the parsing. This module wont scan the sensors or any other shenanigans.
+This module only handles the parsing. It wont scan the sensors or any other shenanigans.
 
 
 ## Contribute
 
 This repository uses [go-semantic-release](https://github.com/go-semantic-release/semantic-release) for automated
-releasing. Because of this, developers should follow [these instructions](https://www.conventionalcommits.org/en/v1.0.0/#examples).
+releasing. Because of this, developers should follow [these instructions](https://www.conventionalcommits.org/en/v1.0.0/#examples)
+for commit message formatting.
 
-The commits are being analyzed with [this extension](https://github.com/go-semantic-release/commit-analyzer-cz#how-the-commit-messages-are-analyzed).
+The commits are being analyzed with [this extension](https://github.com/go-semantic-release/commit-analyzer-cz#how-the-commit-messages-are-analyzed)
+and it requires developers to format commit messages in certain way.
 
 
 ## Releases / Changes
