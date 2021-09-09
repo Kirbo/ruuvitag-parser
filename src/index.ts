@@ -1,7 +1,18 @@
-import * as parser from '@lib/parse'
-import parseEddystoneBeacon from '@lib/eddystone'
+import {
+  parseUrl,
+  parseData,
+  formats_2_and_4,
+  format_3,
+  format_5,
+} from '@lib/parser'
+import { parseEddystone } from '@lib/eddystone'
 
 export default {
-  parser,
-  parseEddystoneBeacon,
+  parseUrl,
+  parseData,
+  parseEddystone,
+
+  formats_2_and_4,
+  format_3,
+  format_5,
 }

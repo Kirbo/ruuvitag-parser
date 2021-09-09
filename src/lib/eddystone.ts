@@ -17,35 +17,33 @@ const suffixes = [
   '.gov',
 ]
 
-const parseEddystoneBeacon = (serviceDataBuffer: Buffer): string | void => {
+export const parseEddystone = (data: Buffer): string | void => {
   // Parse url from an Eddystone beacon
   //
   // Returns undefined if it's not an Eddystone URL packet
   // Otherwise returns url as a string
 
-  const frameType = serviceDataBuffer.readUInt8(0)
+  const frameType = data.readUInt8(0)
 
   // Check  that this is a URL frame type
   if (frameType !== 0x10) {
     return
   }
 
-  const prefix = serviceDataBuffer.readUInt8(2)
+  const prefix = data.readUInt8(2)
   if (prefix > prefixes.length) {
     return
   }
 
   let url = prefixes[prefix]
 
-  for (let i = 3; i < serviceDataBuffer.length; i++) {
-    if (serviceDataBuffer[i] < suffixes.length) {
-      url += suffixes[serviceDataBuffer[i]]
+  for (let i = 3; i < data.length; i++) {
+    if (data[i] < suffixes.length) {
+      url += suffixes[data[i]]
     } else {
-      url += String.fromCharCode(serviceDataBuffer[i])
+      url += String.fromCharCode(data[i])
     }
   }
 
   return url
 }
-
-export default parseEddystoneBeacon

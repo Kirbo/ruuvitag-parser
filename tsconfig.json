@@ -22,6 +22,8 @@
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
     "paths": {
+      "@index": ["./src"],
+      "@src/*": ["./src/*"],
       "@lib/*": ["./src/lib/*"],
       "@dataformats": ["./src/dataformats"],
       "@dataformats/*": ["./src/dataformats/*"],
