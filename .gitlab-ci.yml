@@ -120,6 +120,12 @@ new release:
     paths:
       - node_modules
   needs:
+    - job: lint
+      artifacts: false
+    - job: unit
+      artifacts: false
+    - job: verify
+      artifacts: false
     - job: ts to js
       artifacts: false
   artifacts:

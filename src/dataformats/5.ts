@@ -28,8 +28,6 @@ const parse = (data: Buffer): ParsedFormatV5 => {
   } else if (accelerationX > 32768) {
     // two's complement
     accelerationX = accelerationX - 65536
-  } else {
-    accelerationX = accelerationX
   }
 
   let accelerationY: number | undefined = (data[11] << 8) | (data[12] & 0xff)
@@ -39,8 +37,6 @@ const parse = (data: Buffer): ParsedFormatV5 => {
   } else if (accelerationY > 32768) {
     // two's complement
     accelerationY = accelerationY - 65536
-  } else {
-    accelerationY = accelerationY
   }
 
   let accelerationZ: number | undefined = (data[13] << 8) | (data[14] & 0xff)
@@ -50,8 +46,6 @@ const parse = (data: Buffer): ParsedFormatV5 => {
   } else if (accelerationZ > 32768) {
     // two's complement
     accelerationZ = accelerationZ - 65536
-  } else {
-    accelerationZ = accelerationZ
   }
 
   const powerInfo = ((data[15] & 0xff) << 8) | (data[16] & 0xff)
