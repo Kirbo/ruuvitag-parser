@@ -26,7 +26,6 @@
       "@dataformats": ["./src/dataformats"],
       "@dataformats/*": ["./src/dataformats/*"],
       "@types": ["./src/types"],
-      "@types/*": ["./src/types/*"],
     }
   },
   "exclude": [

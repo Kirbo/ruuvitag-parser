@@ -1,4 +1,4 @@
-import * as dataFormats from '@dataformats'
+import { formats_2_and_4, format_3, format_5 } from '@dataformats'
 import {
   ParsedFormatV2,
   ParsedFormatV3,
@@ -27,10 +27,7 @@ const getReadings = (
   const dataFormat = buffer[0]
 
   return dataFormat === 2 || dataFormat === 4
-    ? Object.assign(
-        { dataFormat: dataFormat },
-        dataFormats.formats_2_and_4.parse(buffer),
-      )
+    ? Object.assign({ dataFormat: dataFormat }, formats_2_and_4.parse(buffer))
     : new Error('Unsupported data format: ' + dataFormat)
 }
 
@@ -50,9 +47,9 @@ const parseManufacturerData = (
   let dataFormat = dataBuffer[2]
   switch (dataFormat) {
     case 3:
-      return dataFormats.format_3.parse(dataBuffer)
+      return format_3.parse(dataBuffer)
     case 5:
-      return dataFormats.format_5.parse(dataBuffer)
+      return format_5.parse(dataBuffer)
     default:
       return new Error('Data format not supported')
   }
@@ -61,4 +58,8 @@ const parseManufacturerData = (
 export default {
   parseUrl,
   parseManufacturerData,
+
+  formats_2_and_4,
+  format_3,
+  format_5,
 }

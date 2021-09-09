@@ -35,15 +35,13 @@
       "@lib/(.*)$": "<rootDir>/src/lib/$1",
       "@dataformats": "<rootDir>/src/dataformats",
       "@dataformats/(.*)$": "<rootDir>/src/dataformats/$1",
-      "@types": "<rootDir>/src/types",
-      "@types/(.*)$": "<rootDir>/src/types/$1"
+      "@types": "<rootDir>/src/types"
     }
   },
   "_moduleAliases": {
     "@lib/*": "src/lib/*",
     "@dataformats": "src/dataformats",
     "@dataformats/*": "src/dataformats/*",
-    "@types": "src/types",
-    "@types/*": "src/types/*"
+    "@types": "src/types"
   }
 }
