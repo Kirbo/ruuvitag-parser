@@ -26,7 +26,7 @@
     "compile:ci": "ttsc -p tsconfig.compile.json",
     "compile:clean": "rm -rf dist",
     "compile": "yarn compile:clean && ttsc -p tsconfig.compile.json",
-    "lint": "eslint src",
+    "lint": "eslint --ext .ts src/",
     "test:unit": "jest --verbose",
     "test": "yarn lint && yarn verify && yarn test:unit",
     "verify": "ttsc --noEmit"
