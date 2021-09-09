@@ -32,6 +32,8 @@
     "preset": "ts-jest",
     "testRegex": ".*unit.test.ts$",
     "moduleNameMapper": {
+      "@index$": "<rootDir>/src",
+      "@src/(.*)$": "<rootDir>/src/$1",
       "@lib/(.*)$": "<rootDir>/src/lib/$1",
       "@dataformats": "<rootDir>/src/dataformats",
       "@dataformats/(.*)$": "<rootDir>/src/dataformats/$1",
@@ -39,6 +41,8 @@
     }
   },
   "_moduleAliases": {
+    "@index": "src",
+    "@src/*": "src/*",
     "@lib/*": "src/lib/*",
     "@dataformats": "src/dataformats",
     "@dataformats/*": "src/dataformats/*",

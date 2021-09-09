@@ -4,7 +4,7 @@ import {
   ParsedFormatV4,
   ParsedFormatV5,
 } from '@types'
-import parser from '@lib/parse'
+import parser from '@index'
 
 const createManufacturerData = () => {
   const values: ParsedFormatV3 = {
@@ -29,7 +29,7 @@ const createManufacturerData = () => {
   }
 }
 
-describe('parse.js', () => {
+describe('parser.js', () => {
   const data = [0x98, 0x15, 0x00, 0xc0, 0x30]
   const dataBufferFormat2 = Buffer.from([0x02].concat(data))
   const dataBufferFormat4 = Buffer.from([0x04].concat(data).concat([0x3e]))
@@ -96,7 +96,7 @@ describe('parse.js', () => {
   describe('parsing data format 3', () => {
     const data = createManufacturerData()
     const testValues = data.values
-    const result = parser.parseManufacturerData(data.buffer) as ParsedFormatV3
+    const result = parser.parseData(data.buffer) as ParsedFormatV3
 
     it("shouldn't return error", () => {
       expect(result instanceof Error).toBeFalsy()
@@ -153,7 +153,7 @@ describe('parse.js', () => {
   })
 
   describe('parsing data format 5', () => {
-    const result = parser.parseManufacturerData(
+    const result = parser.parseData(
       Buffer.from([0x99, 0x04].concat(dataFormat5)),
     ) as ParsedFormatV5
 
