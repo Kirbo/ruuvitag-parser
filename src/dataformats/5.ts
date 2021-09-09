@@ -5,15 +5,10 @@ const int2Hex = (str: number) =>
 
 const parse = (data: Buffer): ParsedFormatV5 => {
   let temperature: number | undefined = (data[3] << 8) | (data[4] & 0xff)
-  if (temperature === 32768) {
-    // ruuvi spec := 'invalid/not available'
-    temperature = undefined
-  } else if (temperature > 32768) {
-    // two's complement
-    temperature = (temperature - 65536) * 0.005
-  } else {
-    temperature = temperature * 0.005
+  if (temperature > 32767) {
+    temperature -= 65534
   }
+  temperature = temperature / 200.0
 
   let humidity: number | undefined = ((data[5] & 0xff) << 8) | (data[6] & 0xff)
   humidity = humidity !== 65535 ? humidity * 0.0025 : undefined

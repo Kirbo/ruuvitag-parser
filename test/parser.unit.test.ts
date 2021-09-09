@@ -30,16 +30,16 @@ const createManufacturerData = () => {
 }
 
 const mqttValues = {
-  accelerationX: 840,
-  accelerationY: 564,
-  accelerationZ: 56,
-  battery: 2515,
-  humidity: 77.655,
-  mac: 'E2:A2:20:A4:04:46',
-  measurementSequenceNumber: 36257,
-  movementCounter: 141,
-  pressure: 100158,
-  temperature: 15.09,
+  accelerationX: -832,
+  accelerationY: -584,
+  accelerationZ: 60,
+  battery: 2959,
+  humidity: 41.5075,
+  mac: 'C9:5F:8D:CF:52:1F',
+  measurementSequenceNumber: 49370,
+  movementCounter: 86,
+  pressure: 100105,
+  temperature: 24.49,
   txPower: 4,
 }
 
