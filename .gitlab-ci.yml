@@ -43,6 +43,34 @@ dependencies:
   script:
     - yarn install
 
+lint:
+  <<: *general
+  <<: *no-tags
+  stage: test
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: dependencies
+      artifacts: true
+  script:
+    - yarn lint
+
+verify:
+  <<: *general
+  <<: *no-tags
+  stage: test
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: dependencies
+      artifacts: true
+  script:
+    - yarn verify
+
 unit:
   <<: *general
   <<: *no-tags
@@ -55,7 +83,7 @@ unit:
     - job: dependencies
       artifacts: true
   script:
-    - yarn test --ci --colors
+    - yarn test:unit --ci --colors
 
 ts to js:
   <<: *general
