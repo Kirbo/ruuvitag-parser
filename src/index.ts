@@ -13,6 +13,9 @@ export default {
   parseEddystone,
 
   formats_2_and_4,
+
+  format_2: formats_2_and_4,
+  format_4: formats_2_and_4,
   format_3,
   format_5,
 }

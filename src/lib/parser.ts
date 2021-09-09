@@ -25,7 +25,7 @@ const getReadings = (data: string): ParsedFormatV2 | ParsedFormatV4 | Error => {
   const dataFormat = buffer[0]
 
   return dataFormat === 2 || dataFormat === 4
-    ? Object.assign({ dataFormat: dataFormat }, formats_2_and_4.parse(buffer))
+    ? Object.assign({ dataFormat }, formats_2_and_4.parse(buffer))
     : new Error('Unsupported data format: ' + dataFormat)
 }
 
@@ -40,7 +40,7 @@ const parseUrl = (url: string): ParsedFormatV2 | ParsedFormatV4 | Error => {
 }
 
 const parseData = (data: Buffer): ParsedFormatV3 | ParsedFormatV5 | Error => {
-  let dataFormat = data[2]
+  const dataFormat = data[2]
   switch (dataFormat) {
     case 3:
       return format_3.parse(data)
