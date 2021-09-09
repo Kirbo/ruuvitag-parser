@@ -29,6 +29,20 @@ const createManufacturerData = () => {
   }
 }
 
+const mqttValues = {
+  accelerationX: 840,
+  accelerationY: 564,
+  accelerationZ: 56,
+  battery: 2515,
+  humidity: 77.655,
+  mac: 'E2:A2:20:A4:04:46',
+  measurementSequenceNumber: 36257,
+  movementCounter: 141,
+  pressure: 100158,
+  temperature: 15.09,
+  txPower: 4,
+}
+
 describe('parser.js', () => {
   const data = [0x98, 0x15, 0x00, 0xc0, 0x30]
   const dataBufferFormat2 = Buffer.from([0x02].concat(data))
@@ -203,6 +217,44 @@ describe('parser.js', () => {
 
     it('should parse MAC address', () => {
       expect(result.mac).toBe('CB:B8:33:4C:88:01')
+    })
+  })
+
+  describe('should parse mqtt message', () => {
+    const mqttResult = parser.parseData(
+      '0201061BFF9904050BCA7956C3EE03480234003872768D8DA1E2A220A40446',
+    )
+
+    it("shouldn't return error", () => {
+      expect(mqttResult instanceof Error).toBeFalsy()
+    })
+
+    it('should parse temperature value', () => {
+      expect(mqttResult.temperature).toBe(mqttValues.temperature)
+    })
+
+    it('should parse pressure value', () => {
+      expect(mqttResult.pressure).toBe(mqttValues.pressure)
+    })
+
+    it('should parse humidity value', () => {
+      expect(mqttResult.humidity).toBe(mqttValues.humidity)
+    })
+
+    it('should parse accelerationX', () => {
+      expect(mqttResult.accelerationX).toBe(mqttValues.accelerationX)
+    })
+
+    it('should parse accelerationY', () => {
+      expect(mqttResult.accelerationY).toBe(mqttValues.accelerationY)
+    })
+
+    it('should parse accelerationZ', () => {
+      expect(mqttResult.accelerationZ).toBe(mqttValues.accelerationZ)
+    })
+
+    it('should parse battery', () => {
+      expect(mqttResult.battery).toBe(mqttValues.battery)
     })
   })
 })
