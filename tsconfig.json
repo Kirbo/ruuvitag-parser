@@ -1,4 +1,8 @@
 {
+  "ts-node": {
+    "transpileOnly": true,
+    "require": [ "typescript-transform-paths/register" ],
+  },
   "compilerOptions": {
     "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
@@ -22,13 +26,17 @@
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
     "paths": {
-      "@index": ["./src"],
-      "@src/*": ["./src/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@dataformats": ["./src/dataformats"],
-      "@dataformats/*": ["./src/dataformats/*"],
-      "@types": ["./src/types"],
-    }
+      "@index": ["src"],
+      "@src/*": ["src/*"],
+      "@lib/*": ["src/lib/*"],
+      "@dataformats": ["src/dataformats"],
+      "@dataformats/*": ["src/dataformats/*"],
+      "@types": ["src/types"],
+    },
+    "plugins": [
+      { "transform": "typescript-transform-paths", "useRootDirs": true, "exclude": [ "**/node_modules/**" ] },
+      { "transform": "typescript-transform-paths", "useRootDirs": true, "afterDeclarations": true, "exclude": [ "**/node_modules/**" ] }
+    ],
   },
   "exclude": [
     "node_modules",
