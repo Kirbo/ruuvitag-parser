@@ -1,6 +1,7 @@
 {
   "name": "ruuvitag-parser",
   "main": "dist/index.js",
+  "types": "src/types/index.d.ts",
   "repository": "git@gitlab.devaus.eu:kirbo/ruuvitag-parser.git",
   "author": "Kimmo Saari <kirbownz@me.com>",
   "license": "MIT",
