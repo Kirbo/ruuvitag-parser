@@ -7,11 +7,11 @@ import { ParsedFormatV2, ParsedFormatV4 } from '@types'
 const unSign = (signed: number): number =>
   signed & 0x80 ? -1 * (signed & 0x7f) : signed
 
-const parse = (buffer: Buffer): ParsedFormatV2 | ParsedFormatV4 => ({
-  humidity: buffer[1] / 2,
-  temperature: unSign(buffer[2]),
-  pressure: (buffer[4] * 256 + buffer[5] + 50000) / 100,
-  eddystoneId: buffer.length === 7 ? buffer[6] : undefined,
+const parse = (data: Buffer): ParsedFormatV2 | ParsedFormatV4 => ({
+  humidity: data[1] / 2,
+  temperature: unSign(data[2]),
+  pressure: (data[4] * 256 + data[5] + 50000) / 100,
+  eddystoneId: data.length === 7 ? data[6] : undefined,
 })
 
 export default {
