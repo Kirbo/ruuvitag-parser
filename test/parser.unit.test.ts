@@ -222,7 +222,7 @@ describe('parser.js', () => {
 
   describe('should parse mqtt message', () => {
     const mqttResult = parser.parseData(
-      '0201061BFF9904050BCA7956C3EE03480234003872768D8DA1E2A220A40446',
+      '0201061BFF990405132240DBC3B9FCC0FDB8003CA9F656C0DAC95F8DCF521F',
     )
 
     it("shouldn't return error", () => {
