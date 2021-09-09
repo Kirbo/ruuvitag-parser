@@ -5,7 +5,7 @@ const int2Hex = (str: number) =>
 
 const parse = (data: Buffer): ParsedFormatV5 => {
   let temperature: number | undefined = (data[3] << 8) | (data[4] & 0xff)
-  if (temperature == 32768) {
+  if (temperature === 32768) {
     // ruuvi spec := 'invalid/not available'
     temperature = undefined
   } else if (temperature > 32768) {
@@ -16,13 +16,13 @@ const parse = (data: Buffer): ParsedFormatV5 => {
   }
 
   let humidity: number | undefined = ((data[5] & 0xff) << 8) | (data[6] & 0xff)
-  humidity = humidity != 65535 ? humidity * 0.0025 : undefined
+  humidity = humidity !== 65535 ? humidity * 0.0025 : undefined
 
   let pressure: number | undefined = ((data[7] & 0xff) << 8) | (data[8] & 0xff)
   pressure = pressure !== 65535 ? pressure + 50000 : undefined
 
   let accelerationX: number | undefined = (data[9] << 8) | (data[10] & 0xff)
-  if (accelerationX == 32768) {
+  if (accelerationX === 32768) {
     // ruuvi spec := 'invalid/not available'
     accelerationX = undefined
   } else if (accelerationX > 32768) {
@@ -33,7 +33,7 @@ const parse = (data: Buffer): ParsedFormatV5 => {
   }
 
   let accelerationY: number | undefined = (data[11] << 8) | (data[12] & 0xff)
-  if (accelerationY == 32768) {
+  if (accelerationY === 32768) {
     // ruuvi spec := 'invalid/not available'
     accelerationY = undefined
   } else if (accelerationY > 32768) {
@@ -44,7 +44,7 @@ const parse = (data: Buffer): ParsedFormatV5 => {
   }
 
   let accelerationZ: number | undefined = (data[13] << 8) | (data[14] & 0xff)
-  if (accelerationZ == 32768) {
+  if (accelerationZ === 32768) {
     // ruuvi spec := 'invalid/not available'
     accelerationZ = undefined
   } else if (accelerationZ > 32768) {
