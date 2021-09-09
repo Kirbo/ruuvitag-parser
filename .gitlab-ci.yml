@@ -70,7 +70,7 @@ ts to js:
       artifacts: true
   artifacts:
     paths:
-      - src
+      - dist
     expire_in: 1 month
   script:
     - yarn compile:ci
@@ -120,9 +120,9 @@ npm package:
     paths:
       - node_modules
   needs:
-    - job: ts to js
-      artifacts: true
     - job: new release
+      artifacts: true
+    - job: ts to js
       artifacts: true
   before_script:
     - test -f .version || exit 0 # If no `.version` file found, just exit

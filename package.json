@@ -1,6 +1,6 @@
 {
   "name": "ruuvitag-parser",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "git@gitlab.devaus.eu:kirbo/ruuvitag-parser.git",
   "author": "Kimmo Saari <kimmo.saari@aava.fi>",
   "license": "MIT",
@@ -18,6 +18,12 @@
     "compile:clean": "find src test -name '*.js' -delete",
     "test": "jest --verbose"
   },
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "README.md"
+  ],
   "jest": {
     "preset": "ts-jest",
     "testRegex": ".*unit.test.ts$",
