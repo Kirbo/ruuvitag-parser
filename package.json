@@ -14,6 +14,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
     "jest": "27.1.1",
+    "jest-junit": "12.2.0",
     "prettier": "2.4.0",
     "ts-jest": "27.0.5",
     "ttypescript": "1.5.12",
@@ -28,8 +29,9 @@
     "compile:clean": "rm -rf dist",
     "compile": "yarn compile:clean && ttsc -p tsconfig.compile.json",
     "lint": "eslint --ext .ts src/",
-    "test:unit": "jest --verbose",
-    "test": "yarn lint && yarn verify && yarn test:unit",
+    "test:unit": "jest --verbose tests/**.unit.test.ts",
+    "test:integration": "jest --verbose tests/**.integration.test.ts",
+    "test": "yarn lint && yarn verify && yarn test:unit && yarn compile && yarn test:integration",
     "verify": "ttsc --noEmit"
   },
   "files": [
@@ -41,15 +43,26 @@
   ],
   "jest": {
     "preset": "ts-jest",
-    "testRegex": ".*unit.test.ts$",
+    "testRegex": ".*test.ts$",
     "moduleNameMapper": {
       "@index$": "<rootDir>/src",
       "@src/(.*)$": "<rootDir>/src/$1",
+      "@dist/(.*)$": "<rootDir>/dist/$1",
       "@lib/(.*)$": "<rootDir>/src/lib/$1",
       "@dataformats": "<rootDir>/src/dataformats",
       "@dataformats/(.*)$": "<rootDir>/src/dataformats/$1",
       "@types": "<rootDir>/src/types",
       "@types/*": "<rootDir>/src/types/$1"
     }
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "outputDirectory": ".",
+    "outputName": "junit.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
   }
 }
