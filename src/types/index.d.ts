@@ -15,6 +15,12 @@ declare module 'ruuvitag-parser' {
   export namespace formats_2_and_4 {
     function parse(data: Buffer): ParsedFormatV2 | ParsedFormatV4
   }
+  export namespace format_2 {
+    function parse(data: Buffer): ParsedFormatV2
+  }
+  export namespace format_4 {
+    function parse(data: Buffer): ParsedFormatV4
+  }
   export namespace format_3 {
     function parse(data: Buffer): ParsedFormatV3
   }

@@ -15,19 +15,21 @@
     "jest": "27.1.1",
     "prettier": "2.4.0",
     "ts-jest": "27.0.5",
-    "typescript": "4.4.2"
+    "ttypescript": "1.5.12",
+    "typescript": "4.4.2",
+    "typescript-transform-paths": "3.3.1"
   },
   "dependencies": {
     "@types/node": "16.7.13"
   },
   "scripts": {
-    "compile": "yarn compile:clean && tsc -p tsconfig.compile.json",
-    "compile:ci": "tsc -p tsconfig.compile.json",
+    "compile:ci": "ttsc -p tsconfig.compile.json",
     "compile:clean": "rm -rf dist",
+    "compile": "yarn compile:clean && ttsc -p tsconfig.compile.json",
     "lint": "eslint src",
-    "test": "yarn lint && yarn verify && yarn test:unit",
     "test:unit": "jest --verbose",
-    "verify": "tsc --noEmit"
+    "test": "yarn lint && yarn verify && yarn test:unit",
+    "verify": "ttsc --noEmit"
   },
   "files": [
     "dist",
@@ -48,14 +50,5 @@
       "@types": "<rootDir>/src/types",
       "@types/*": "<rootDir>/src/types/$1"
     }
-  },
-  "_moduleAliases": {
-    "@index": "src",
-    "@src/*": "src/*",
-    "@lib/*": "src/lib/*",
-    "@dataformats": "src/dataformats",
-    "@dataformats/*": "src/dataformats/*",
-    "@types": "src/types",
-    "@types/*": "src/types/*"
   }
 }
