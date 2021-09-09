@@ -1,5 +1,10 @@
 import * as dataFormats from '@dataformats'
-import { ParsedFormatV2, ParsedFormatV4 } from '@types'
+import {
+  ParsedFormatV2,
+  ParsedFormatV3,
+  ParsedFormatV4,
+  ParsedFormatV5,
+} from '@types'
 
 const stripUrl = (url: string) => {
   const match = url.match(/#(.+)$/)
@@ -39,7 +44,9 @@ const parseUrl = (url: string): ParsedFormatV2 | ParsedFormatV4 | Error => {
   return encodedData instanceof Error ? encodedData : getReadings(encodedData)
 }
 
-const parseManufacturerData = (dataBuffer: Buffer) => {
+const parseManufacturerData = (
+  dataBuffer: Buffer,
+): ParsedFormatV3 | ParsedFormatV5 | Error => {
   let dataFormat = dataBuffer[2]
   switch (dataFormat) {
     case 3:

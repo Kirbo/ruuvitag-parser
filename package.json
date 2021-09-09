@@ -7,11 +7,13 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "27.0.1",
-    "@types/node": "16.7.13",
     "jest": "27.1.1",
     "prettier": "2.3.2",
     "ts-jest": "27.0.5",
     "typescript": "4.4.2"
+  },
+  "dependencies": {
+    "@types/node": "16.7.13"
   },
   "scripts": {
     "compile": "yarn compile:clean && tsc -p tsconfig.compile.json",

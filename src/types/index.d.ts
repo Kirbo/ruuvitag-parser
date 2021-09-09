@@ -1,3 +1,12 @@
+export interface parser {
+  parseUrl: (url: string) => ParsedFormatV2 | ParsedFormatV4 | Error
+  parseManufacturerData: (
+    dataBuffer: Buffer,
+  ) => ParsedFormatV3 | ParsedFormatV5 | Error
+}
+
+export function parseEddystoneBeacon(serviceDataBuffer: Buffer): string | void
+
 export interface ParsedFormatV2 {
   eddystoneId?: number
   humidity?: number
