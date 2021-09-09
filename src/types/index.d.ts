@@ -12,13 +12,13 @@ declare module 'ruuvitag-parser' {
   function parseData(data: Buffer): ParsedFormatV3 | ParsedFormatV5 | Error
   function parseEddystone(data: Buffer): string | void
 
-  export module formats_2_and_4 {
-    function parse(buffer: Buffer): ParsedFormatV2 | ParsedFormatV4
+  export namespace formats_2_and_4 {
+    function parse(data: Buffer): ParsedFormatV2 | ParsedFormatV4
   }
-  export module format_3 {
-    function parse(buffer: Buffer): ParsedFormatV3
+  export namespace format_3 {
+    function parse(data: Buffer): ParsedFormatV3
   }
-  export module format_5 {
-    function parse(buffer: Buffer): ParsedFormatV5
+  export namespace format_5 {
+    function parse(data: Buffer): ParsedFormatV5
   }
 }
