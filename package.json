@@ -2,7 +2,7 @@
   "name": "ruuvitag-parser",
   "main": "dist/index.js",
   "repository": "git@gitlab.devaus.eu:kirbo/ruuvitag-parser.git",
-  "author": "Kimmo Saari <kimmo.saari@aava.fi>",
+  "author": "Kimmo Saari <kirbownz@me.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "27.0.1",
@@ -22,7 +22,8 @@
     "dist",
     "src",
     "package.json",
-    "README.md"
+    "README.md",
+    "tsconfig.json"
   ],
   "jest": {
     "preset": "ts-jest",
