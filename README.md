@@ -28,9 +28,13 @@ The commits are being analyzed with [this extension](https://github.com/go-seman
 and it requires developers to format commit messages in certain way.
 
 Read more about:
-- [Semantic Versioning - Specifications](https://semver.org/#semantic-versioning-200)
-- [Conventional Commits - Specifications](https://www.conventionalcommits.org/en/v1.0.0/#summary)
-- [Conventional Commits - Cheatsheet](https://kapeli.com/cheat_sheets/Conventional_Commits.docset/Contents/Resources/Documents/index)
+- [Semantic Versioning (SemVer)](https://semver.org/#semantic-versioning-200)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
+
+### Cheat Sheets
+- [Kapeli.com](https://kapeli.com/cheat_sheets/Conventional_Commits.docset/Contents/Resources/Documents/index)
+- [cheatography.com](https://cheatography.com/albelop/cheat-sheets/conventional-commits/)
+- [megamorf.gitlab.io](https://megamorf.gitlab.io/cheat-sheets/conventional-commits/)
 
 The [GitHub repository](https://github.com/kirbo/ruuvitag-parser) is only a mirror from GitLab.
 Please make Merge Requests in [GitLab](https://gitlab.com/kirbo/ruuvitag-parser/-/merge_requests).
