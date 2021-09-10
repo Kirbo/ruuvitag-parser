@@ -82,8 +82,12 @@ unit:
   needs:
     - job: dependencies
       artifacts: true
+  artifacts:
+    paths:
+      - coverage
+    expire_in: 1 month
   script:
-    - yarn test:unit --ci --colors
+    - yarn test:unit --ci --colors ---coverage --coverageReporters=html text
 
 ts to js:
   <<: *general
