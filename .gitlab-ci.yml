@@ -33,6 +33,7 @@ stages:
   - install
   - test
   - compile
+  - post compile
   - publish
 
 ###### JOBS ###################################################################
@@ -96,7 +97,6 @@ unit:
     expire_in: 1 month
   script:
     - yarn test:unit --ci --colors ---coverage --coverageReporters=html text --reporters=default jest-junit
-
 ts to js:
   <<: *general
   <<: *no-tags
@@ -115,6 +115,20 @@ ts to js:
   script:
     - yarn compile:ci
 
+integration test:
+  <<: *general
+  <<: *no-tags
+  stage: post compile
+  cache:
+    policy: pull
+    paths:
+      - node_modules
+  needs:
+    - job: ts to js
+      artifacts: true
+  script:
+    - yarn test:integration --ci --colors
+
 new release:
   <<: *general
   stage: publish
@@ -126,7 +140,7 @@ new release:
       when: on_success
   image:
     name: registry.gitlab.com/go-semantic-release/semantic-release:latest
-    entrypoint: ['']
+    entrypoint: [""]
   cache:
     policy: pull
     paths:
@@ -139,6 +153,8 @@ new release:
     - job: verify
       artifacts: false
     - job: ts to js
+      artifacts: false
+    - job: integration test
       artifacts: false
   artifacts:
     paths:
