@@ -44,7 +44,7 @@ Please make Merge Requests in [GitLab](https://gitlab.com/kirbo/ruuvitag-parser/
 ## Releases / Changes
 
 Releases and "changelogs" can be [found here](https://gitlab.com/kirbo/ruuvitag-parser/-/tags).
-Each releases description contains the changes that the version includes, e.g.: [v0.1.6](https://gitlab.com/kirbo/ruuvitag-parser/-/tags/v0.1.6).
+Each releases description contains the changes that the version includes, e.g.: [v0.2.14](https://gitlab.com/kirbo/ruuvitag-parser/-/tags/v0.2.14).
 
 
 ## Links
