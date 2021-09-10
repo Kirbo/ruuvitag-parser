@@ -162,8 +162,8 @@ new release:
     expire_in: 1 month
     when: on_success
   script:
-    # - semantic-release --provider gitlab --version-file
-    - semantic-release --provider gitlab --version-file --allow-initial-development-versions # Once stable, remove this and uncomment previous line
+    - semantic-release --provider gitlab --version-file
+    # - semantic-release --provider gitlab --version-file --allow-initial-development-versions # Once stable, remove this and uncomment previous line
 
 npm package:
   <<: *general

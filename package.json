@@ -31,7 +31,7 @@
     "lint": "eslint --ext .ts src/",
     "test:unit": "jest --verbose tests/**.unit.test.ts",
     "test:integration": "jest --verbose tests/**.integration.test.ts",
-    "test": "yarn lint && yarn verify && yarn test:unit",
+    "test": "yarn lint && yarn verify && yarn test:unit && yarn compile && yarn test:integration",
     "verify": "ttsc --noEmit"
   },
   "files": [
