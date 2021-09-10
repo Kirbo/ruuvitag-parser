@@ -10,9 +10,9 @@ const parse = (data: Buffer): ParsedFormatV5 => {
     temperature = undefined
   } else if (temperature > 32768) {
     // two's complement
-    temperature = Number(((temperature - 65536) * 0.005).toFixed(2))
+    temperature = Number(((temperature - 65536) * 0.005).toFixed(4))
   } else {
-    temperature = Number((temperature * 0.005).toFixed(2))
+    temperature = Number((temperature * 0.005).toFixed(4))
   }
 
   let humidity: number | undefined = ((data[5] & 0xff) << 8) | (data[6] & 0xff)
@@ -20,7 +20,8 @@ const parse = (data: Buffer): ParsedFormatV5 => {
     humidity !== 65535 ? Number((humidity * 0.0025).toFixed(4)) : undefined
 
   let pressure: number | undefined = ((data[7] & 0xff) << 8) | (data[8] & 0xff)
-  pressure = pressure !== 65535 ? pressure + 50000 : undefined
+  pressure =
+    pressure !== 65535 ? Number((pressure + 50000).toFixed(4)) : undefined
 
   let accelerationX: number | undefined = (data[9] << 8) | (data[10] & 0xff)
   if (accelerationX === 32768) {
