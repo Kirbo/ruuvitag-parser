@@ -15,6 +15,7 @@ into TypeScript.
 
 This module only handles the parsing. It wont scan the sensors or any other shenanigans.
 
+
 ## Contribute
 
 This repository is being developed in [GitLab](https://gitlab.com/kirbo/ruuvitag-parser).
@@ -44,6 +45,13 @@ Please make Merge Requests in [GitLab](https://gitlab.com/kirbo/ruuvitag-parser/
 
 Releases and "changelogs" can be [found here](https://gitlab.com/kirbo/ruuvitag-parser/-/tags).
 Each releases description contains the changes that the version includes, e.g.: [v0.1.6](https://gitlab.com/kirbo/ruuvitag-parser/-/tags/v0.1.6).
+
+
+## Links
+
+- [GitLab repository](https://gitlab.com/kirbo/ruuvitag-parser) - this is where the development happens.
+- [GitHub repository](https://github.com/kirbo/ruuvitag-parser) - this is only mirroring the GitLab repository.
+- [npm package](https://www.npmjs.com/package/ruuvitag-parser) - published npm package.
 
 
 ## License
