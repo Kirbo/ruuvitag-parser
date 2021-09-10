@@ -11,6 +11,10 @@ cache:
   paths:
     - node_modules/
 
+###### VARIABLES ##############################################################
+variables:
+  SAST_EXCLUDED_PATHS: tests, node_modules, coverage, dist
+
 ###### TEMPLATES ##############################################################
 .general: &general
   tags:
