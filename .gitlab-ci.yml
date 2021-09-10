@@ -87,11 +87,15 @@ unit:
     - job: dependencies
       artifacts: true
   artifacts:
+    when: always
     paths:
+      - junit.xml
       - coverage
+    reports:
+      junit: junit.xml
     expire_in: 1 month
   script:
-    - yarn test:unit --ci --colors ---coverage --coverageReporters=html text
+    - yarn test:unit --ci --colors ---coverage --coverageReporters=html text --reporters=default jest-junit
 
 ts to js:
   <<: *general
