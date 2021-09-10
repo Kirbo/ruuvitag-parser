@@ -1,9 +1,9 @@
 # RuuviTag Parser
 
-![pipeline status](https://img.shields.io/gitlab/pipeline/kirbo/ruuvitag-parser/master)
-![coverage report](https://img.shields.io/gitlab/coverage/kirbo/ruuvitag-parser/master)
 ![latest version](https://img.shields.io/npm/v/ruuvitag-parser?label=version)
 ![last commit](https://img.shields.io/github/last-commit/kirbo/ruuvitag-parser.svg)
+![pipeline status](https://img.shields.io/gitlab/pipeline/kirbo/ruuvitag-parser/master)
+![coverage report](https://img.shields.io/gitlab/coverage/kirbo/ruuvitag-parser/master)
 ![downloads monthly](https://img.shields.io/npm/dm/ruuvitag-parser)
 ![downloads total](https://img.shields.io/npm/dt/ruuvitag-parser)
 
