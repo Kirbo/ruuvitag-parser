@@ -21,3 +21,16 @@ Read more about:
 
 The [GitHub repository](https://github.com/kirbo/ruuvitag-parser) is only a mirror from GitLab.
 Please make Merge Requests in [GitLab](https://gitlab.com/kirbo/ruuvitag-parser/-/merge_requests).
+
+
+## Releases / Changes
+
+Releases and "changelogs" can be [found here](https://gitlab.com/kirbo/ruuvitag-parser/-/tags).
+Each releases description contains the changes that the version includes, e.g.: [v0.2.14](https://gitlab.com/kirbo/ruuvitag-parser/-/tags/v0.2.14).
+
+
+## Links
+
+- [GitLab repository](https://gitlab.com/kirbo/ruuvitag-parser) - this is where the development happens.
+- [GitHub repository](https://github.com/kirbo/ruuvitag-parser) - this is only mirroring the GitLab repository.
+- [npm package](https://www.npmjs.com/package/ruuvitag-parser) - published npm package.
