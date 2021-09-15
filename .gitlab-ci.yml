@@ -98,7 +98,7 @@ unit:
       junit: junit.xml
     expire_in: 1 month
   script:
-    - yarn test:unit --ci --colors ---coverage --coverageReporters=html text --reporters=default jest-junit
+    - yarn test:unit --ci --colors --coverage --coverageReporters=html text --reporters=default jest-junit
 ts to js:
   <<: *general
   <<: *no-tags
@@ -121,6 +121,8 @@ integration test:
   <<: *general
   <<: *no-tags
   stage: post compile
+  # coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+).*\|*\s+([\d\.]+).*\|*\s+([\d\.]+).*\|*\s+([\d\.]+).*/'
+  coverage: '/All files[^|]*\|[^|]*\s+[\d\.]+.*\|*\s+([\d\.]+).*\|*\s+[\d\.]+.*\|*\s+[\d\.]+.*/'
   cache:
     policy: pull
     paths:
@@ -129,7 +131,7 @@ integration test:
     - job: ts to js
       artifacts: true
   script:
-    - yarn test:integration --ci --colors
+    - yarn test:integration --ci --colors --coverage --coverageReporters=html text --reporters=default jest-junit
 
 new release:
   <<: *general
