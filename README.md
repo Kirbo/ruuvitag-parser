@@ -4,7 +4,6 @@
 ![last commit](https://img.shields.io/github/last-commit/kirbo/ruuvitag-parser.svg)
 ![pipeline status](https://img.shields.io/gitlab/pipeline/kirbo/ruuvitag-parser/master)
 ![coverage report](https://img.shields.io/gitlab/coverage/kirbo/ruuvitag-parser/master)
-![downloads monthly](https://img.shields.io/npm/dm/ruuvitag-parser)
 ![downloads total](https://img.shields.io/npm/dt/ruuvitag-parser)
 
 This repository is heavily influenced/inspired by [pakastin/node-ruuvitag](https://github.com/pakastin/node-ruuvitag),
@@ -44,10 +43,12 @@ const url = parseEddystone(eddystoneUrlBuffer)
 
 Few examples can be found from [integration tests](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts):
 - [Import `parseData`](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L1)
-- [Parse v3 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L69)
-- [Parse v5 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L94)
-- [Parse MQTT message](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L119)
-- [Parse Eddystone URL](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L147)
+- [Parse v2 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L129)
+- [Parse v3 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L144)
+- [Parse v3 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L171)
+- [Parse v5 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L192)
+- [Parse MQTT message](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L233)
+- [Parse Eddystone URL](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L281)
 
 ## Contribute
 
