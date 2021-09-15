@@ -1,4 +1,5 @@
-const { parseData, parseEddystone } = require('@dist/index')
+const parser = require('@dist/index')
+const { formats_2_and_4, parseData, parseEddystone, parseUrl } = parser
 
 const dataFormat5 = [
   0x05, 0x12, 0xfc, 0x53, 0x94, 0xc3, 0x7c, 0x00, 0x04, 0xff, 0xfc, 0x04, 0x0c,
@@ -26,7 +27,20 @@ const dataBuffers = {
   ]),
 }
 
+const data = [0x98, 0x15, 0x00, 0xc0, 0x30]
+const dataBufferFormat2 = Buffer.from([0x02].concat(data))
+const dataBufferFormat4 = Buffer.from([0x04].concat(data).concat([0x3e]))
+const testUrlDataFormat2 = 'ruu.vi/#' + dataBufferFormat2.toString('base64')
+const testUrlDataFormat4 = (
+  'ruu.vi/#' + dataBufferFormat4.toString('base64')
+).slice(0, 17)
+
 const results = {
+  dataFormat2: {
+    humidity: 76,
+    pressure: 992,
+    temperature: 21,
+  },
   dataFormat3: {
     accelerationX: 14850,
     accelerationY: -9235,
@@ -35,6 +49,11 @@ const results = {
     humidity: 58.5,
     pressure: 101300,
     temperature: 21.58,
+  },
+  dataFormat4: {
+    humidity: 76,
+    pressure: 992,
+    temperature: 21,
   },
   dataFormat5: {
     accelerationX: 4,
@@ -65,7 +84,63 @@ const results = {
 }
 
 describe('compiled ruuvitag-parser', () => {
-  describe('data format 3', () => {
+  describe('parseUrl', () => {
+    it('should return error if not a ruuviTag url', done => {
+      const result = parseUrl('https://bad.url.com/#foo')
+      if (!(result instanceof Error)) {
+        return done.fail('Should have got an error')
+      }
+      expect(result.message).toMatch(/not a ruuvitag url/i)
+      done()
+    })
+
+    it("should return error if url doesn't contain data", done => {
+      const result = parseUrl('https://ruu.vi/foo')
+      if (!(result instanceof Error)) {
+        return done.fail('Should have got an error')
+      }
+      expect(result.message).toMatch(/invalid url/i)
+      done()
+    })
+
+    it('should return error if url contains invalid data', done => {
+      const result = parseUrl('https://ruu.vi/#foo')
+      if (!(result instanceof Error)) {
+        return done.fail('Should have got an error')
+      }
+      expect(result.message).toMatch(/invalid data/i)
+      done()
+    })
+
+    it('should return error if data format is unsupported', done => {
+      const result = parseUrl(
+        'https://ruu.vi/#' +
+          Buffer.from([5, 6, 7, 8, 9, 10]).toString('base64'),
+      )
+      if (!(result instanceof Error)) {
+        return done.fail('Should have got an error')
+      }
+      expect(result.message).toMatch(/unsupported data format: 5/i)
+      done()
+    })
+  })
+
+  describe('parsing data format 2', () => {
+    const parsed = formats_2_and_4.parse(dataBufferFormat2)
+    const testResults = results.dataFormat2
+
+    it('should parse humidity value', () => {
+      expect(parsed.humidity).toBe(testResults.humidity)
+    })
+    it('should parse temperature value', () => {
+      expect(parsed.temperature).toBe(testResults.temperature)
+    })
+    it('should parse pressure value', () => {
+      expect(parsed.pressure).toBe(testResults.pressure)
+    })
+  })
+
+  describe('parsing data format 3', () => {
     const parsed = parseData(v3data)
     const testResults = results.dataFormat3
 
@@ -92,7 +167,28 @@ describe('compiled ruuvitag-parser', () => {
     })
   })
 
-  describe('data format 5', () => {
+  describe('parsing data format 4', () => {
+    const parsed = formats_2_and_4.parse(dataBufferFormat4)
+    const testResults = results.dataFormat4
+
+    it("shouldn't return error", () => {
+      expect(parsed instanceof Error).toBeFalsy()
+    })
+    it('should parse humidity value', () => {
+      expect(parsed.humidity).toBe(testResults.humidity)
+    })
+    it('should parse temperature value', () => {
+      expect(parsed.temperature).toBe(testResults.temperature)
+    })
+    it('should parse pressure value', () => {
+      expect(parsed.pressure).toBe(testResults.pressure)
+    })
+    it('should parse eddystoneId', () => {
+      expect(parsed.eddystoneId).toBeTruthy()
+    })
+  })
+
+  describe('parsing data format 5', () => {
     const parsed = parseData(Buffer.from([0x99, 0x04].concat(dataFormat5)))
     const testResults = results.dataFormat5
 

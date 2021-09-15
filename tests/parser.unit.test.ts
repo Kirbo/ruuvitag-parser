@@ -7,7 +7,7 @@ import {
 import parser from '@index'
 
 const createManufacturerData = () => {
-  const values: ParsedFormatV3 = {
+  const valuesv3: ParsedFormatV3 = {
     humidity: 58.5,
     temperature: 21.58,
     pressure: 101300,
@@ -17,6 +17,20 @@ const createManufacturerData = () => {
     battery: 2958,
   }
 
+  const valuesv5: ParsedFormatV5 = {
+    temperature: 24.3,
+    pressure: 100044,
+    humidity: 53.49,
+    accelerationX: 4,
+    accelerationY: -4,
+    accelerationZ: 1036,
+    txPower: 4,
+    battery: 2977,
+    movementCounter: 66,
+    measurementSequenceNumber: 205,
+    mac: 'CB:B8:33:4C:88:01',
+  }
+
   const manufacturerId = [0x99, 0x04]
   const dataFormat = [0x03]
   const valuesArray = [
@@ -24,7 +38,8 @@ const createManufacturerData = () => {
   ]
 
   return {
-    values,
+    valuesv3,
+    valuesv5,
     buffer: Buffer.from(manufacturerId.concat(dataFormat).concat(valuesArray)),
   }
 }
@@ -109,7 +124,7 @@ describe('parser.js', () => {
 
   describe('parsing data format 3', () => {
     const data = createManufacturerData()
-    const testValues = data.values
+    const testValues = data.valuesv3
     const result = parser.parseData(data.buffer) as ParsedFormatV3
 
     it("shouldn't return error", () => {
@@ -167,94 +182,93 @@ describe('parser.js', () => {
   })
 
   describe('parsing data format 5', () => {
-    const result = parser.parseData(
+    const data = createManufacturerData()
+    const parsed = parser.parseData(
       Buffer.from([0x99, 0x04].concat(dataFormat5)),
     ) as ParsedFormatV5
+    const testResults = data.valuesv5
 
     it("shouldn't return error", () => {
-      expect(result instanceof Error).toBeFalsy()
-    })
-
-    it('should parse temperature value', () => {
-      expect(result.temperature).toBe(24.3)
-    })
-
-    it('should parse pressure value', () => {
-      expect(result.pressure).toBe(100044)
-    })
-
-    it('should parse humidity value', () => {
-      expect(result.humidity).toBe(53.49)
+      expect(testResults instanceof Error).toBeFalsy()
     })
 
     it('should parse accelerationX', () => {
-      expect(result.accelerationX).toBe(4)
+      expect(parsed.accelerationX).toBe(testResults.accelerationX)
     })
-
     it('should parse accelerationY', () => {
-      expect(result.accelerationY).toBe(-4)
+      expect(parsed.accelerationY).toBe(testResults.accelerationY)
     })
-
     it('should parse accelerationZ', () => {
-      expect(result.accelerationZ).toBe(1036)
+      expect(parsed.accelerationZ).toBe(testResults.accelerationZ)
     })
-
-    it('should parse txPower', () => {
-      expect(result.txPower).toBe(4)
-    })
-
     it('should parse battery', () => {
-      expect(result.battery).toBe(2977)
+      expect(parsed.battery).toBe(testResults.battery)
     })
-
-    it('should parse movementCounter', () => {
-      expect(result.movementCounter).toBe(66)
+    it('should parse humidity', () => {
+      expect(parsed.humidity).toBe(testResults.humidity)
     })
-
+    it('should parse mac', () => {
+      expect(parsed.mac).toBe(testResults.mac)
+    })
     it('should parse measurementSequenceNumber', () => {
-      expect(result.measurementSequenceNumber).toBe(205)
+      expect(parsed.measurementSequenceNumber).toBe(
+        testResults.measurementSequenceNumber,
+      )
     })
-
-    it('should parse MAC address', () => {
-      expect(result.mac).toBe('CB:B8:33:4C:88:01')
+    it('should parse movementCounter', () => {
+      expect(parsed.movementCounter).toBe(testResults.movementCounter)
+    })
+    it('should parse pressure', () => {
+      expect(parsed.pressure).toBe(testResults.pressure)
+    })
+    it('should parse temperature', () => {
+      expect(parsed.temperature).toBe(testResults.temperature)
+    })
+    it('should parse txPower', () => {
+      expect(parsed.txPower).toBe(testResults.txPower)
     })
   })
 
   describe('should parse mqtt message', () => {
-    const mqttResult = parser.parseData(
+    const parsed = parser.parseData(
       '0201061BFF990405132240DBC3B9FCC0FDB8003CA9F656C0DAC95F8DCF521F',
-    )
-
-    it("shouldn't return error", () => {
-      expect(mqttResult instanceof Error).toBeFalsy()
-    })
-
-    it('should parse temperature value', () => {
-      expect(mqttResult.temperature).toBe(mqttValues.temperature)
-    })
-
-    it('should parse pressure value', () => {
-      expect(mqttResult.pressure).toBe(mqttValues.pressure)
-    })
-
-    it('should parse humidity value', () => {
-      expect(mqttResult.humidity).toBe(mqttValues.humidity)
-    })
+    ) as ParsedFormatV5
+    const testResults = mqttValues
 
     it('should parse accelerationX', () => {
-      expect(mqttResult.accelerationX).toBe(mqttValues.accelerationX)
+      expect(parsed.accelerationX).toBe(testResults.accelerationX)
     })
-
     it('should parse accelerationY', () => {
-      expect(mqttResult.accelerationY).toBe(mqttValues.accelerationY)
+      expect(parsed.accelerationY).toBe(testResults.accelerationY)
     })
-
     it('should parse accelerationZ', () => {
-      expect(mqttResult.accelerationZ).toBe(mqttValues.accelerationZ)
+      expect(parsed.accelerationZ).toBe(testResults.accelerationZ)
     })
-
     it('should parse battery', () => {
-      expect(mqttResult.battery).toBe(mqttValues.battery)
+      expect(parsed.battery).toBe(testResults.battery)
+    })
+    it('should parse humidity', () => {
+      expect(parsed.humidity).toBe(testResults.humidity)
+    })
+    it('should parse mac', () => {
+      expect(parsed.mac).toBe(testResults.mac)
+    })
+    it('should parse measurementSequenceNumber', () => {
+      expect(parsed.measurementSequenceNumber).toBe(
+        testResults.measurementSequenceNumber,
+      )
+    })
+    it('should parse movementCounter', () => {
+      expect(parsed.movementCounter).toBe(testResults.movementCounter)
+    })
+    it('should parse pressure', () => {
+      expect(parsed.pressure).toBe(testResults.pressure)
+    })
+    it('should parse temperature', () => {
+      expect(parsed.temperature).toBe(testResults.temperature)
+    })
+    it('should parse txPower', () => {
+      expect(parsed.txPower).toBe(testResults.txPower)
     })
   })
 })
