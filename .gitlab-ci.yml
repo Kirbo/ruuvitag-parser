@@ -80,6 +80,7 @@ unit:
   <<: *general
   <<: *no-tags
   stage: test
+  coverage: '/All files[^|]*\|[^|]*\s+[\d\.]+.*\|*\s+([\d\.]+).*\|.*\|.*\|.*/'
   cache:
     policy: pull
     paths:
