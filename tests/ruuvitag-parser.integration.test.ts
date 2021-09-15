@@ -67,51 +67,69 @@ const results = {
 describe('compiled ruuvitag-parser', () => {
   describe('data format 3', () => {
     const parsed = parseData(v3data)
+    const testResults = results.dataFormat3
+
     it('should parse accelerationX', () => {
-      expect(parsed.accelerationX).toBe(results.dataFormat3.accelerationX)
+      expect(parsed.accelerationX).toBe(testResults.accelerationX)
     })
     it('should parse accelerationY', () => {
-      expect(parsed.accelerationY).toBe(results.dataFormat3.accelerationY)
+      expect(parsed.accelerationY).toBe(testResults.accelerationY)
     })
     it('should parse accelerationZ', () => {
-      expect(parsed.accelerationZ).toBe(results.dataFormat3.accelerationZ)
+      expect(parsed.accelerationZ).toBe(testResults.accelerationZ)
     })
     it('should parse battery', () => {
-      expect(parsed.battery).toBe(results.dataFormat3.battery)
+      expect(parsed.battery).toBe(testResults.battery)
     })
     it('should parse humidity', () => {
-      expect(parsed.humidity).toBe(results.dataFormat3.humidity)
+      expect(parsed.humidity).toBe(testResults.humidity)
     })
     it('should parse pressure', () => {
-      expect(parsed.pressure).toBe(results.dataFormat3.pressure)
+      expect(parsed.pressure).toBe(testResults.pressure)
     })
     it('should parse temperature', () => {
-      expect(parsed.temperature).toBe(results.dataFormat3.temperature)
+      expect(parsed.temperature).toBe(testResults.temperature)
     })
   })
 
   describe('data format 5', () => {
     const parsed = parseData(Buffer.from([0x99, 0x04].concat(dataFormat5)))
+    const testResults = results.dataFormat5
+
     it('should parse accelerationX', () => {
-      expect(parsed.accelerationX).toBe(results.dataFormat5.accelerationX)
+      expect(parsed.accelerationX).toBe(testResults.accelerationX)
     })
     it('should parse accelerationY', () => {
-      expect(parsed.accelerationY).toBe(results.dataFormat5.accelerationY)
+      expect(parsed.accelerationY).toBe(testResults.accelerationY)
     })
     it('should parse accelerationZ', () => {
-      expect(parsed.accelerationZ).toBe(results.dataFormat5.accelerationZ)
+      expect(parsed.accelerationZ).toBe(testResults.accelerationZ)
     })
     it('should parse battery', () => {
-      expect(parsed.battery).toBe(results.dataFormat5.battery)
+      expect(parsed.battery).toBe(testResults.battery)
     })
     it('should parse humidity', () => {
-      expect(parsed.humidity).toBe(results.dataFormat5.humidity)
+      expect(parsed.humidity).toBe(testResults.humidity)
+    })
+    it('should parse mac', () => {
+      expect(parsed.mac).toBe(testResults.mac)
+    })
+    it('should parse measurementSequenceNumber', () => {
+      expect(parsed.measurementSequenceNumber).toBe(
+        testResults.measurementSequenceNumber,
+      )
+    })
+    it('should parse movementCounter', () => {
+      expect(parsed.movementCounter).toBe(testResults.movementCounter)
     })
     it('should parse pressure', () => {
-      expect(parsed.pressure).toBe(results.dataFormat5.pressure)
+      expect(parsed.pressure).toBe(testResults.pressure)
     })
     it('should parse temperature', () => {
-      expect(parsed.temperature).toBe(results.dataFormat5.temperature)
+      expect(parsed.temperature).toBe(testResults.temperature)
+    })
+    it('should parse txPower', () => {
+      expect(parsed.txPower).toBe(testResults.txPower)
     })
   })
 
@@ -119,26 +137,42 @@ describe('compiled ruuvitag-parser', () => {
     const parsed = parseData(
       '0201061BFF990405132240DBC3B9FCC0FDB8003CA9F656C0DAC95F8DCF521F',
     )
+    const testResults = results.mqttMessage
+
     it('should parse accelerationX', () => {
-      expect(parsed.accelerationX).toBe(results.mqttMessage.accelerationX)
+      expect(parsed.accelerationX).toBe(testResults.accelerationX)
     })
     it('should parse accelerationY', () => {
-      expect(parsed.accelerationY).toBe(results.mqttMessage.accelerationY)
+      expect(parsed.accelerationY).toBe(testResults.accelerationY)
     })
     it('should parse accelerationZ', () => {
-      expect(parsed.accelerationZ).toBe(results.mqttMessage.accelerationZ)
+      expect(parsed.accelerationZ).toBe(testResults.accelerationZ)
     })
     it('should parse battery', () => {
-      expect(parsed.battery).toBe(results.mqttMessage.battery)
+      expect(parsed.battery).toBe(testResults.battery)
     })
     it('should parse humidity', () => {
-      expect(parsed.humidity).toBe(results.mqttMessage.humidity)
+      expect(parsed.humidity).toBe(testResults.humidity)
+    })
+    it('should parse mac', () => {
+      expect(parsed.mac).toBe(testResults.mac)
+    })
+    it('should parse measurementSequenceNumber', () => {
+      expect(parsed.measurementSequenceNumber).toBe(
+        testResults.measurementSequenceNumber,
+      )
+    })
+    it('should parse movementCounter', () => {
+      expect(parsed.movementCounter).toBe(testResults.movementCounter)
     })
     it('should parse pressure', () => {
-      expect(parsed.pressure).toBe(results.mqttMessage.pressure)
+      expect(parsed.pressure).toBe(testResults.pressure)
     })
     it('should parse temperature', () => {
-      expect(parsed.temperature).toBe(results.mqttMessage.temperature)
+      expect(parsed.temperature).toBe(testResults.temperature)
+    })
+    it('should parse txPower', () => {
+      expect(parsed.txPower).toBe(testResults.txPower)
     })
   })
 
