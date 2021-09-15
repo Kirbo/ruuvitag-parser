@@ -16,6 +16,39 @@ into TypeScript.
 This module only handles the parsing. It wont scan the sensors or any other shenanigans.
 
 
+## Usage examples
+
+### Parse Dataformat v3 and v5
+Just to parse the data, use like this:
+```typescript
+import { parseData } from 'ruuvitag-parser'
+
+const jsonData = parseData(dataFromRuuvitag)
+```
+
+### Parse Dataformat v2 and v4
+Just to parse the data, use like this:
+```typescript
+import { parseUrl } from 'ruuvitag-parser'
+
+const jsonData = parseUrl(dataFromRuuvitag)
+```
+
+### Parse Eddystone URL
+```typescript
+import { parseEddystone } from 'ruuvitag-parser'
+
+const url = parseEddystone(eddystoneUrlBuffer)
+```
+
+
+Few examples can be found from [integration tests](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts):
+- [Import `parseData`](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L1)
+- [Parse v3 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L69)
+- [Parse v5 data](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L94)
+- [Parse MQTT message](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L119)
+- [Parse Eddystone URL](https://gitlab.com/kirbo/ruuvitag-parser/-/blob/master/tests/ruuvitag-parser.integration.test.ts#L147)
+
 ## Contribute
 
 This repository is being developed in [GitLab](https://gitlab.com/kirbo/ruuvitag-parser).
