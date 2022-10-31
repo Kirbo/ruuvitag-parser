@@ -195,4 +195,4 @@ npm package:
   script:
     - echo "${npmrc}" > ~/.npmrc
     - echo "Publish version $(cat .version)"
-    - yarn publish --new-version $(cat .version) --no-git-tag-version
+    - yarn publish --new-version $(cat .version) --no-git-tag-version --non-interactive
