@@ -7,10 +7,6 @@ include:
 ###### GENERAL ################################################################
 image: node:18
 
-cache:
-  paths:
-    - node_modules/
-
 ###### VARIABLES ##############################################################
 variables:
   SAST_EXCLUDED_PATHS: tests, node_modules, coverage, dist
@@ -41,8 +37,8 @@ dependencies:
   <<: *general
   <<: *no-tags
   stage: install
-  cache:
-    policy: pull-push
+  artifacts:
+    when: always
     paths:
       - node_modules
   script:
@@ -52,10 +48,6 @@ lint:
   <<: *general
   <<: *no-tags
   stage: test
-  cache:
-    policy: pull
-    paths:
-      - node_modules
   needs:
     - job: dependencies
       artifacts: true
@@ -66,10 +58,6 @@ verify:
   <<: *general
   <<: *no-tags
   stage: test
-  cache:
-    policy: pull
-    paths:
-      - node_modules
   needs:
     - job: dependencies
       artifacts: true
@@ -82,10 +70,6 @@ unit:
   stage: test
   # coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+).*\|*\s+([\d\.]+).*\|*\s+([\d\.]+).*\|*\s+([\d\.]+).*/'
   coverage: '/All files[^|]*\|[^|]*\s+[\d\.]+.*\|*\s+([\d\.]+).*\|*\s+[\d\.]+.*\|*\s+[\d\.]+.*/'
-  cache:
-    policy: pull
-    paths:
-      - node_modules
   needs:
     - job: dependencies
       artifacts: true
@@ -103,10 +87,6 @@ ts to js:
   <<: *general
   <<: *no-tags
   stage: compile
-  cache:
-    policy: pull
-    paths:
-      - node_modules
   needs:
     - job: dependencies
       artifacts: true
@@ -123,11 +103,9 @@ integration test:
   stage: post compile
   # coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+).*\|*\s+([\d\.]+).*\|*\s+([\d\.]+).*\|*\s+([\d\.]+).*/'
   coverage: '/All files[^|]*\|[^|]*\s+[\d\.]+.*\|*\s+([\d\.]+).*\|*\s+[\d\.]+.*\|*\s+[\d\.]+.*/'
-  cache:
-    policy: pull
-    paths:
-      - node_modules
   needs:
+    - job: dependencies
+      artifacts: true
     - job: ts to js
       artifacts: true
   script:
@@ -145,10 +123,6 @@ new release:
   image:
     name: registry.gitlab.com/go-semantic-release/semantic-release:latest
     entrypoint: [""]
-  cache:
-    policy: pull
-    paths:
-      - node_modules
   needs:
     - job: lint
       artifacts: false
@@ -181,10 +155,6 @@ npm package:
         - .version
       when: always
     - when: never
-  cache:
-    policy: pull
-    paths:
-      - node_modules
   needs:
     - job: new release
       artifacts: true
